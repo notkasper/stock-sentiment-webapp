@@ -10,6 +10,8 @@ const hpp = require('hpp');
 const cors = require('cors');
 dotenv.config({ path: '../.env' });
 
+const stocks = require('./routes/stocks');
+
 const app = express();
 
 if (process.env.NODE_ENV == 'development') {
@@ -43,7 +45,9 @@ app.use(hpp());
 app.use(cors());
 
 // Set static folder
-app.use(express.static(path.join(__dirname, './public')));
+app.use(express.static(path.join(__dirname, './build')));
+
+app.use('/api/v1/stocks', stocks);
 
 app.use('/test', (req, res) => res.status(200).send({ data: 'success' }));
 
